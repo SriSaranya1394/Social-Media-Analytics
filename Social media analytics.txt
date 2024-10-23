@@ -1,13 +1,9 @@
--- 1. Create Tables
-
--- Users Table
 CREATE TABLE Users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE
 );
 
--- Posts Table
 CREATE TABLE Posts (
     post_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT,
@@ -16,7 +12,6 @@ CREATE TABLE Posts (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--- Likes Table
 CREATE TABLE Likes (
     like_id INT PRIMARY KEY AUTO_INCREMENT,
     post_id INT,
@@ -25,31 +20,22 @@ CREATE TABLE Likes (
     FOREIGN KEY (user_id) REFERENCES Users(user_id)
 );
 
--- 2. Insert Sample Data
-
--- Insert Users
 INSERT INTO Users (username, email) VALUES
-('john_doe', 'john@example.com'),
-('jane_smith', 'jane@example.com');
+('Ajith_kumar', 'ajith@example.com'),
+('Priyanka_sri', 'priyanka@example.com');
 
--- Insert Posts
 INSERT INTO Posts (user_id, content) VALUES
-(1, 'Hello world! This is my first post.'),
+(1, 'Hi Folks! This is my first post.'),
 (2, 'Enjoying the sunny weather!');
 
--- Insert Likes
 INSERT INTO Likes (post_id, user_id) VALUES
-(1, 2),  -- Jane likes John's post
-(2, 1);  -- John likes Jane's post
+(1, 2),  -- ajith likes priyanka's post
+(2, 1);  -- priyanka likes ajith's post
 
--- 3. Basic Queries
-
--- Retrieve All Posts
 SELECT p.post_id, u.username, p.content, p.created_at
 FROM Posts p
 JOIN Users u ON p.user_id = u.user_id;
 
--- Count Likes for Each Post
 SELECT p.post_id, COUNT(l.like_id) AS like_count
 FROM Posts p
 LEFT JOIN Likes l ON p.post_id = l.post_id
